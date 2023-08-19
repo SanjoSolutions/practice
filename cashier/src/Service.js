@@ -1,4 +1,4 @@
-import Decimal from "./libs/decimal.mjs"
+import Decimal from './libs/decimal.mjs'
 
 const items = new Map()
 
@@ -7,16 +7,14 @@ function addItem(item) {
 }
 
 addItem({
-  id: "5000112548068",
-  name: "Coca Cola (0,5L)",
+  id: '5000112548068',
+  name: 'Coca Cola (0,5L)',
   price: new Decimal(0.99),
 })
-
 
 export class Service {
   #hasBeenStarted = false
   stream = null
-  videoRef = null
   setScannedItems = null
   onStreamSet = null
 
@@ -47,7 +45,9 @@ export class Service {
       while (true) {
         const frame2 = await imageCapture.grabFrame()
         context.drawImage(frame2, 0, 0)
-        frame.data.set(context.getImageData(0, 0, frame2.width, frame2.height).data)
+        frame.data.set(
+          context.getImageData(0, 0, frame2.width, frame2.height).data
+        )
 
         const code = barcodeDetector.detectAndDecode(frame)
         if (code) {
@@ -69,8 +69,6 @@ export class Service {
   }
 }
 
-
 async function wait(duration) {
   return new Promise(resolve => setTimeout(resolve, duration))
 }
-

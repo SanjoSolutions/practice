@@ -1,9 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react"
-import "./App.css"
-import Decimal from "./libs/decimal.mjs"
-import { List } from "./List.js"
-import { Service } from "./Service.js"
-import { service } from "./services.js"
+import { useCallback, useEffect, useRef, useState } from 'react'
+import './App.css'
+import { List } from './List.js'
+import { service } from './services.js'
 
 function App() {
   console.log('App')
@@ -12,35 +10,35 @@ function App() {
   const videoRef = useRef(null)
 
   const onStreamSet = useCallback(
-  	function onStreamSet(stream) {
-  		const video = videoRef.current
+    function onStreamSet(stream) {
+      const video = videoRef.current
       video.srcObject = stream
       video.play()
-  	},
-  	[videoRef]
+    },
+    [videoRef]
   )
 
   service.setScannedItems = setScannedItems
   service.onStreamSet = onStreamSet
 
-  useEffect(function () {
-    service.videoRef = videoRef
-  }, [videoRef])
-
   useEffect(
     function () {
-      service.run()
+      service.videoRef = videoRef
     },
-    [],
+    [videoRef]
   )
 
+  useEffect(function () {
+    service.run()
+  }, [])
+
   return (
-    <div className="App">
-      <div className="container1">
-        <List items={ scannedItems } />
+    <div className='App'>
+      <div className='container1'>
+        <List items={scannedItems} />
       </div>
-      <div className="container2">
-        <video ref={ videoRef }></video>
+      <div className='container2'>
+        <video ref={videoRef}></video>
       </div>
     </div>
   )
