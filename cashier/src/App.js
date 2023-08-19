@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import React from 'react'
 import './App.css'
 import { List } from './List.js'
 import { service } from './services.js'
