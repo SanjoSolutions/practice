@@ -1,0 +1,14 @@
+.list h2 {
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.list ul {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  padding-left: 16px;
+}
+
+.list ul li {
+  text-align: left;
+}

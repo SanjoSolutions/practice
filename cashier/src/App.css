@@ -1,0 +1,17 @@
+.App {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.container1 {
+  flex: 0 0 300px;
+  padding: 0.5rem;
+}
+
+.container2 {
+
+}
+
+.App video {
+  width: 100%;
+}
