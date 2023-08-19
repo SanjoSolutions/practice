@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import React from 'react'
 import './App.css'
 import { List } from './List.js'
 import { service } from './services.js'
@@ -15,7 +16,7 @@ function App() {
       video.srcObject = stream
       video.play()
     },
-    [videoRef]
+    [videoRef],
   )
 
   service.setScannedItems = setScannedItems
@@ -25,7 +26,7 @@ function App() {
     function () {
       service.videoRef = videoRef
     },
-    [videoRef]
+    [videoRef],
   )
 
   useEffect(function () {
@@ -33,11 +34,11 @@ function App() {
   }, [])
 
   return (
-    <div className='App'>
-      <div className='container1'>
+    <div className="App">
+      <div className="container1">
         <List items={scannedItems} />
       </div>
-      <div className='container2'>
+      <div className="container2">
         <video ref={videoRef}></video>
       </div>
     </div>
