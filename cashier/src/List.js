@@ -1,17 +1,20 @@
-import "./List.css"
-import { formatCurrency } from "./formatCurrency.js"
-import { sum } from "./sum.js"
+import './List.css'
+import { formatCurrency } from './formatCurrency.js'
+import { sum } from './sum.js'
 
 export function List({ items }) {
   return (
     <div className="list">
       <h2>Groceries</h2>
       <ul>
-        { items.map((item, index) =>
-          <li key={ index }>{ item.name } for { formatCurrency(item.price) }</li>) }
+        {items.map((item, index) => (
+          <li key={index}>
+            {item.name} for {formatCurrency(item.price)}
+          </li>
+        ))}
       </ul>
       <div className="total">
-        <strong>Total:</strong> { formatCurrency(calculateTotal(items)) }
+        <strong>Total:</strong> {formatCurrency(calculateTotal(items))}
       </div>
     </div>
   )

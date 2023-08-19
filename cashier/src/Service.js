@@ -46,7 +46,7 @@ export class Service {
         const frame2 = await imageCapture.grabFrame()
         context.drawImage(frame2, 0, 0)
         frame.data.set(
-          context.getImageData(0, 0, frame2.width, frame2.height).data
+          context.getImageData(0, 0, frame2.width, frame2.height).data,
         )
 
         const code = barcodeDetector.detectAndDecode(frame)
@@ -70,5 +70,5 @@ export class Service {
 }
 
 async function wait(duration) {
-  return new Promise(resolve => setTimeout(resolve, duration))
+  return new Promise((resolve) => setTimeout(resolve, duration))
 }
