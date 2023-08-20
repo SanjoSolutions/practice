@@ -7,13 +7,18 @@ function App() {
   const [scannedItems, setScannedItems] = useState([])
   const videoRef = useRef(null)
 
+  const onLoadedData = useCallback(function onLoadedData(event) {
+    event.target.play()
+  }, [])
+
   const onStreamSet = useCallback(function onStreamSet(stream) {
     const video = videoRef.current
     video.srcObject = stream
-    video.play()
   }, [])
 
-  const onScannedItemsUpdated = useCallback(function (scannedItems) {
+  const onScannedItemsUpdated = useCallback(function onScannedItemsUpdated(
+    scannedItems,
+  ) {
     setScannedItems(scannedItems)
   }, [])
 
@@ -22,11 +27,6 @@ function App() {
       service.onStreamSet = onStreamSet
       service.onScannedItemsUpdated = onScannedItemsUpdated
       service.start()
-
-      return function () {
-        service.onStreamSet = null
-        service.onScannedItemsUpdated = null
-      }
     },
     [onStreamSet, onScannedItemsUpdated],
   )
@@ -37,7 +37,7 @@ function App() {
         <List items={scannedItems} />
       </div>
       <div className="container2">
-        <video ref={videoRef}></video>
+        <video ref={videoRef} onLoadedData={onLoadedData}></video>
       </div>
     </div>
   )

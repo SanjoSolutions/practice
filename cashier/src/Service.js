@@ -12,6 +12,12 @@ addItem({
   price: new Decimal(0.99),
 })
 
+addItem({
+  id: '4015732007155',
+  name: 'Spree Quell Naturell (1,0L)',
+  price: new Decimal(0.79),
+})
+
 export class Service {
   #hasBeenStarted = false
   onStreamSet = null
