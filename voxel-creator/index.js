@@ -59,6 +59,7 @@ class GridHelper2 extends THREE.LineSegments {
 }
 
 const LENGTH = 50
+const PLANE_LENGTH = 1200
 
 let tool = 1
 let camera, scene, renderer
@@ -126,7 +127,7 @@ function init() {
   raycaster = new THREE.Raycaster()
   pointer = new THREE.Vector2()
 
-  const geometry = new THREE.PlaneGeometry(1000, 1000)
+  const geometry = new THREE.PlaneGeometry(PLANE_LENGTH, PLANE_LENGTH)
   geometry.rotateX(-Math.PI / 2)
 
   plane = new THREE.Mesh(
@@ -237,6 +238,8 @@ function onPointerDown(event) {
           scene.remove(intersect.object)
 
           objects.splice(objects.indexOf(intersect.object), 1)
+
+          removeVoxelFromPersistedState(intersect.object)
         }
 
         // create cube
@@ -354,12 +357,31 @@ function persistVoxels(voxels) {
     b[position.x] = true
   }
 
-  const updatedStateSerialized = JSON.stringify(state)
-  localStorage.setItem('state', updatedStateSerialized)
+  saveState(state)
 }
 
 function persistVoxel(voxel) {
   persistVoxels([voxel])
+}
+
+function removeVoxelFromPersistedState(voxel) {
+  const state = readState()
+
+  const position = voxel.position
+  const a = state[position.y]
+  if (a) {
+    const b = a[position.z]
+    if (b && b[position.x]) {
+      delete b[position.x]
+    }
+  }
+
+  saveState(state)
+}
+
+function saveState(state) {
+  const updatedStateSerialized = JSON.stringify(state)
+  localStorage.setItem('state', updatedStateSerialized)
 }
 
 function onDocumentKeyDown(event) {
@@ -407,7 +429,7 @@ function onDocumentKeyDown(event) {
 }
 
 function createGridHelper(z) {
-  return new GridHelper2(1000, 20, z)
+  return new GridHelper2(PLANE_LENGTH, PLANE_LENGTH / LENGTH, z)
 }
 
 function onDocumentKeyUp(event) {
