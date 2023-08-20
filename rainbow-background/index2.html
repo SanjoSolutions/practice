@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+      }
+
+      div {
+        position: absolute;
+        right: 0;
+        width: 2560px;
+        height: 100vh;
+        background-image: repeating-linear-gradient(
+          90deg,
+          hsl(0deg 100% 50%),
+          hsl(30 100% 50%),
+          hsl(60 100% 50%),
+          hsl(90 100% 50%),
+          hsl(120 100% 50%),
+          hsl(150 100% 50%),
+          hsl(180 100% 50%),
+          hsl(210 100% 50%),
+          hsl(240 100% 50%),
+          hsl(270 100% 50%),
+          hsl(300 100% 50%),
+          hsl(330 100% 50%),
+          hsl(360 100% 50%),
+          hsl(30 100% 50%),
+          hsl(60 100% 50%),
+          hsl(90 100% 50%),
+          hsl(120 100% 50%),
+          hsl(150 100% 50%),
+          hsl(180 100% 50%),
+          hsl(210 100% 50%),
+          hsl(240 100% 50%),
+          hsl(270 100% 50%),
+          hsl(300 100% 50%),
+          hsl(330 100% 50%),
+          hsl(360 100% 50%) 2560px
+        );
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <script>
+      // function generateGradient() {
+      //   let gradient = 'linear-gradient(90deg,'
+      //   for (let hue = 0; hue <= 360; hue += 1) {
+      //     if (hue > 0) {
+      //       gradient += ','
+      //     }
+      //     gradient += `hsl(${hue}deg 100% 50%)`
+      //   }
+      //   gradient += ')'
+      //   return gradient
+      // }
+
+      // const gradient = generateGradient()
+      // document.body.style.backgroundImage = gradient
+
+      const div = document.querySelector('div')
+
+      let x = 0
+
+      function next() {
+        x = (x + 1) % 1280
+        div.style.transform = `translate(${x}px)`
+        scheduleNext()
+      }
+
+      function scheduleNext() {
+        requestAnimationFrame(next)
+      }
+
+      scheduleNext()
+    </script>
+  </body>
+</html>
