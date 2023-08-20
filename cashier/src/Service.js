@@ -14,20 +14,19 @@ addItem({
 
 export class Service {
   #hasBeenStarted = false
-  stream = null
-  setScannedItems = null
   onStreamSet = null
+  onScannedItemsUpdated = null
 
-  async run() {
+  async start() {
     if (!this.#hasBeenStarted) {
       this.#hasBeenStarted = true
 
-      this.stream = await navigator.mediaDevices.getUserMedia({ video: true })
-      this.onStreamSet(this.stream)
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      this.onStreamSet(stream)
 
       const barcodeDetector = new cv.barcode_BarcodeDetector()
 
-      const track = this.stream.getVideoTracks()[0]
+      const track = stream.getVideoTracks()[0]
       const settings = track.getSettings()
 
       const canvas = document.createElement('canvas')
@@ -54,7 +53,7 @@ export class Service {
           const item = items.get(code)
           if (item) {
             scannedItems = [...scannedItems, item]
-            this.setScannedItems(scannedItems)
+            this.onScannedItemsUpdated(scannedItems)
           }
           await wait(1000)
         } else {
@@ -62,10 +61,6 @@ export class Service {
         }
       }
     }
-  }
-
-  retrieveStream() {
-    return this.stream
   }
 }
 

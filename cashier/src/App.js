@@ -4,33 +4,32 @@ import { List } from './List.js'
 import { service } from './services.js'
 
 function App() {
-  console.log('App')
-
   const [scannedItems, setScannedItems] = useState([])
   const videoRef = useRef(null)
 
-  const onStreamSet = useCallback(
-    function onStreamSet(stream) {
-      const video = videoRef.current
-      video.srcObject = stream
-      video.play()
-    },
-    [videoRef],
-  )
+  const onStreamSet = useCallback(function onStreamSet(stream) {
+    const video = videoRef.current
+    video.srcObject = stream
+    video.play()
+  }, [])
 
-  service.setScannedItems = setScannedItems
-  service.onStreamSet = onStreamSet
+  const onScannedItemsUpdated = useCallback(function (scannedItems) {
+    setScannedItems(scannedItems)
+  }, [])
 
   useEffect(
     function () {
-      service.videoRef = videoRef
-    },
-    [videoRef],
-  )
+      service.onStreamSet = onStreamSet
+      service.onScannedItemsUpdated = onScannedItemsUpdated
+      service.start()
 
-  useEffect(function () {
-    service.run()
-  }, [])
+      return function () {
+        service.onStreamSet = null
+        service.onScannedItemsUpdated = null
+      }
+    },
+    [onStreamSet, onScannedItemsUpdated],
+  )
 
   return (
     <div className="App">
