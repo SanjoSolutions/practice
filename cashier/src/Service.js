@@ -27,7 +27,11 @@ export class Service {
     if (!this.#hasBeenStarted) {
       this.#hasBeenStarted = true
 
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true })
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { exact: 'environment' },
+        },
+      })
       this.onStreamSet(stream)
 
       const barcodeDetector = new cv.barcode_BarcodeDetector()
